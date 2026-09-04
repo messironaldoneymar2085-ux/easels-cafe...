@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EASELS CAFE — Digital Menu</title>
+<meta name="description" content="EASELS CAFE premium digital menu and table ordering.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f6f3ee;color:#211d19;font-family:'DM Sans',sans-serif}
+.hero{min-height:82vh;padding:26px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:linear-gradient(135deg,#191612,#3b2a20)}
+.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 25%,rgba(218,181,66,.24),transparent 34%),linear-gradient(90deg,rgba(0,0,0,.68),rgba(0,0,0,.18))}
+.hero-content{position:relative;z-index:2;max-width:850px;color:#fff;padding:20px 4px 42px}
+.eyebrow{letter-spacing:4px;text-transform:uppercase;font-size:12px;color:#e4c55e;font-weight:700}.hero h1{font-family:'Playfair Display';font-size:clamp(52px,10vw,105px);line-height:.9;margin:14px 0}.hero p{max-width:580px;color:#ddd;font-size:17px;line-height:1.6}.btn{display:inline-block;padding:14px 20px;border-radius:999px;text-decoration:none;font-weight:700;margin:7px 7px 0 0}.gold{background:#d7b94f;color:#17130e}.glass{border:1px solid #ffffff44;color:#fff;background:#ffffff12}
+.wrap{max-width:1150px;margin:auto;padding:55px 20px}.section-title{font-family:'Playfair Display';font-size:42px;margin:0 0 8px}.sub{color:#766e65;margin-bottom:28px}
+.menu-photo{width:100%;max-height:650px;object-fit:cover;border-radius:26px;box-shadow:0 20px 55px #0002;margin-bottom:50px}
+.tabs{display:flex;gap:10px;overflow:auto;padding:4px 0 22px;position:sticky;top:0;background:#f6f3ee;z-index:4}.tab{border:1px solid #d7d0c5;border-radius:999px;padding:10px 16px;background:#fff;white-space:nowrap;cursor:pointer}.tab.active{background:#211d19;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.card{background:#fff;border:1px solid #e7e0d6;border-radius:22px;overflow:hidden;box-shadow:0 8px 25px #0000000b;transition:.25s}.card:hover{transform:translateY(-4px);box-shadow:0 15px 35px #00000014}.pic{height:180px;background-size:cover;background-position:center}.info{padding:18px}.info h3{margin:0 0 7px;font-family:'Playfair Display';font-size:22px}.info p{margin:0 0 15px;color:#777;font-size:13px;min-height:18px}.row{display:flex;align-items:center;justify-content:space-between}.price{font-weight:800;font-size:18px}.order{border:0;background:#211d19;color:#fff;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}
+.note{margin-top:35px;padding:20px;border-radius:20px;background:#ebe5db;color:#5b534a}.about{background:#211d19;color:#fff}.about .sub{color:#c9c2b9}.footer{padding:30px 20px;text-align:center;background:#17130f;color:#aaa;font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{background:#fff;width:min(600px,100%);border-radius:28px 28px 0 0;padding:25px;max-height:88vh;overflow:auto}.sheet h2{font-family:'Playfair Display';margin-top:0}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.field input,.field textarea{width:100%;padding:13px;border:1px solid #ddd5ca;border-radius:12px;font:inherit}.qty{display:flex;gap:10px;align-items:center}.close{float:right;border:0;background:#eee;border-radius:50%;width:36px;height:36px}
+@media(max-width:600px){.hero{min-height:78vh;padding:18px}.wrap{padding:42px 15px}.section-title{font-size:34px}.pic{height:160px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Cafe • Food • Conversations</div>
+    <h1>EASELS<br>CAFE</h1>
+    <p>A clean, premium digital menu made for a beautiful table-ordering experience.</p>
+    <a class="btn gold" href="#menu">Explore Menu</a>
+    <a class="btn glass" href="#about">About Us</a>
+  </div>
+</header>
+
+<main class="wrap" id="menu">
+  <h2 class="section-title">Our Menu</h2>
+  <p class="sub">Fresh favourites, café classics &amp; signature plates.</p>
+
+  <img class="menu-photo" src="menu-card.jpg" alt="EASELS CAFE original menu card">
+
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="items"></div>
+  <div class="note"><b>Table ordering:</b> Tap “Order” on any item, enter your table number, and your complete order opens in WhatsApp for the café owner.</div>
+</main>
+
+<section class="about" id="about">
+<div class="wrap">
+<h2 class="section-title">Made for good moments.</h2>
+<p class="sub">EASELS CAFE brings food, coffee and an easygoing creative vibe together. Scan. Choose. Order. Enjoy.</p>
+</div>
+</section>
+
+<footer class="footer">© 2026 EASELS CAFE • Digital Menu</footer>
+
+<div class="modal" id="modal">
+ <div class="sheet">
+  <button class="close" onclick="closeModal()">×</button>
+  <h2 id="modalTitle">Order</h2>
+  <div class="field"><label>TABLE NUMBER</label><input id="table" placeholder="e.g. XYZ / 12"></div>
+  <div class="field"><label>QUANTITY</label><div class="qty"><button onclick="changeQty(-1)">−</button><b id="qty">1</b><button onclick="changeQty(1)">+</button></div></div>
+  <div class="field"><label>NOTE (optional)</label><textarea id="note" rows="3" placeholder="Less spicy, extra cheese..."></textarea></div>
+  <button class="btn gold" style="width:100%;border:0;cursor:pointer" onclick="sendWhatsApp()">Send Order on WhatsApp</button>
+ </div>
+</div>
+
+<script>
+/* ================================
+   OWNER SETUP — CHANGE THIS NUMBER
+   Put the owner's WhatsApp number in
+   international format, without + or spaces.
+   Example India: 919876543210
+================================ */
+const OWNER_WHATSAPP = "91XXXXXXXXXX";
+
+const data = {
+ "Fries":[
+  ["Classic French Fries",85,"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85"],
+  ["Peri Peri Fries",95,"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=900&q=85"],
+  ["Cheesy Fries",110,"https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=900&q=85"],
+  ["Cheesy Nachos",130,"https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=900&q=85"],
+  ["Schezwan Tossed Fries",150,"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85"]
+ ],
+ "Sandwich Delights":[
+  ["Plain Veggie Sandwich",100,"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=85"],
+  ["Bombay Sandwich",120,"https://images.unsplash.com/photo-1553909489-cd47e0907980?auto=format&fit=crop&w=900&q=85"],
+  ["Veg Cheese Grill Sandwich",135,"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=85"],
+  ["Tandoori Paneer Sandwich",165,"https://images.unsplash.com/photo-1553909489-cd47e0907980?auto=format&fit=crop&w=900&q=85"]
+ ],
+ "Burger Bliss":[
+  ["Classic Veg Burger",105,"https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=900&q=85"],
+  ["Creamy Mayo Burger",120,"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85"],
+  ["Cheesy Veg Burger",135,"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=85"],
+  ["Classic Paneer Burger",145,"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=85"],
+  ["Add on Cheese",30,"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=85"]
+ ],
+ "Pasta":[
+  ["Arrabbiata Pasta",170,"https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=85"],
+  ["Creamy White Sauce Pasta",180,"https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=900&q=85"],
+  ["Cheesy Pink Sauce Pasta",195,"https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=900&q=85"],
+  ["Easels Special Pasta",245,"https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85"]
+ ],
+ "Salad Symphony":[
+  ["Garden Fresh Salad",115,"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85"],
+  ["Sprout Sensation",165,"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85"],
+  ["Exotic Greens Delight",195,"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85"]
+ ],
+ "Light Bites":[
+  ["Honey Chilli Potato",165,"https://images.unsplash.com/photo-1623238913973-21e45cced554?auto=format&fit=crop&w=900&q=85"],
+  ["Mushroom Spice Bites",185,"https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=85"],
+  ["Paneer Chilli Crunch",195,"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85"]
+ ]
+};
+
+let current={name:"",price:0,qty:1};
+const tabs=document.getElementById("tabs"), items=document.getElementById("items");
+Object.keys(data).forEach((cat,i)=>{
+ const b=document.createElement("button"); b.className="tab"+(i===0?" active":""); b.textContent=cat;
+ b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(cat)};
+ tabs.appendChild(b);
+});
+function render(cat){
+ items.innerHTML="";
+ data[cat].forEach(x=>{
+  const [name,price,img]=x;
+  items.innerHTML+=`<article class="card"><div class="pic" style="background-image:url('${img}')"></div><div class="info"><h3>${name}</h3><p>Freshly prepared at EASELS CAFE</p><div class="row"><span class="price">₹${price}</span><button class="order" onclick='openModal(${JSON.stringify(name)},${price})'>Order</button></div></div></article>`;
+ });
+}
+render(Object.keys(data)[0]);
+
+function openModal(name,price){current={name,price,qty:1};document.getElementById("modalTitle").textContent=name+" • ₹"+price;document.getElementById("qty").textContent=1;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function changeQty(n){current.qty=Math.max(1,current.qty+n);document.getElementById("qty").textContent=current.qty}
+function sendWhatsApp(){
+ const table=document.getElementById("table").value.trim();
+ const note=document.getElementById("note").value.trim();
+ if(!table){alert("Please enter your table number.");return}
+ if(OWNER_WHATSAPP.includes("X")){alert("Owner WhatsApp number is not set yet. Open index.html and replace 91XXXXXXXXXX with the owner's number.");return}
+ const total=current.price*current.qty;
+ const msg=`🍽️ *NEW ORDER — EASELS CAFE*%0A%0A📍 *Table:* ${encodeURIComponent(table)}%0A🛒 *Item:* ${encodeURIComponent(current.name)}%0A🔢 *Quantity:* ${current.qty}%0A💰 *Total:* ₹${total}%0A📝 *Note:* ${encodeURIComponent(note||"None")}%0A%0A✅ Order received from digital menu.`;
+ window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${msg}`,"_blank");
+}
+</script>
+</body>
+</html>
